@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",                     /* Specify ECMAScript target version */
+    "module": "commonjs",                   /* Specify module system */
+    "outDir": "./dist",                     /* Specify output directory for compiled JavaScript files */
+    "strict": true,                         /* Enable all strict type-checking options */
+    "esModuleInterop": true,                /* Allow default imports from modules with no default export */
+    "skipLibCheck": true,                   /* Skip type checking of declaration files */
+    "forceConsistentCasingInFileNames": true /* Ensure consistent file casing */
+  },
+  "include": ["src/**/*"],                  /* Specify the files to include in compilation */
+  "exclude": ["node_modules"]               /* Specify the files to exclude from compilation */
+}
