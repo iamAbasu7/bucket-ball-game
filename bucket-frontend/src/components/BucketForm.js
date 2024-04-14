@@ -32,6 +32,7 @@ function BucketForm() {
       setSuccessMsg(response.data.message);
       setTimeout(() => setSuccessMsg(''), 2000);
       setSuccess(true);
+      window.location.reload();
       setErrorMsg('');
       setBucketName('');
       setVolume('');

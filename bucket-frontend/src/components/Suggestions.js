@@ -43,7 +43,7 @@ function Suggestions() {
 
       // Make POST request
       await axios.post('http://localhost:9001/api/v1/submit', dataToSend);
-
+      window.location.reload();
       // Reset input values after successful submission
       setBallValues({});
     } catch (error) {
@@ -51,9 +51,8 @@ function Suggestions() {
     }
     setIsLoading(false);
   };
-
   return (
-    <div className='p-5'>
+    <div className='p-2'>
       <h2>Bucket Suggestions</h2>
       <div>
         {ballNames.map((ballName, index) => (
@@ -68,9 +67,9 @@ function Suggestions() {
           </div>
         ))}
       </div>
-      <button onClick={handleSubmit} disabled={isLoading}>
+      { ballNames.length > 0 && <button onClick={handleSubmit} disabled={isLoading} type="submit" className="btn btn-primary my-3">
         {isLoading ? 'Submitting...' : 'Submit'}
-      </button>
+      </button> }
     </div>
   );
 }

@@ -76,8 +76,79 @@ app.post('/api/v1/submit', async (req, res) => {
   
   app.get('/api/v1/buckets', async (req, res) => {
     try {
-      const buckets = await knex('buckets').pluck('bucket_name');
-      res.status(200).json({bucket_names:buckets});
+
+      const bucketName = await knex('buckets').pluck('bucket_name');
+      const bucketsData = await knex('buckets').select('bucket_name', 'volume');
+      const ballsData = await knex('balls').select('ball_name', 'volume', 'number_of_balls');
+
+      const buckets = bucketsData.map(row => ({
+        bucket_name: row.bucket_name,
+        volume: row.volume
+    }));
+
+    const balls = ballsData.map(row => ({
+        ball_name: row.ball_name,
+        volume: row.volume,
+        ball_count: row.number_of_balls
+    }));
+    
+    function maxBallsOfOneColorInEachBucket(buckets: Bucket[], balls: Ball[]): string[] {
+        const result: { bucket_name: string, ball_counts: Record<string, number> }[] = [];
+        const remainingBalls: Record<string, number> = {};
+        const logs: string[] = [];
+    
+        for (const bucket of buckets) {
+            result.push({ bucket_name: bucket.bucket_name, ball_counts: {} });
+        }
+        for (const ball of balls) {
+            remainingBalls[ball.ball_name] = ball.ball_count;
+        }
+    
+        for (const bucket of buckets) {
+            let bucketVolume = bucket.volume;
+            const bucketBallCounts: Record<string, number> = {};
+    
+            for (const ball of balls) {
+                let count = Math.min(Math.floor(bucketVolume / ball.volume), remainingBalls[ball.ball_name]);
+                bucketBallCounts[ball.ball_name] = count;
+                remainingBalls[ball.ball_name] -= count;
+                bucketVolume -= count * ball.volume;
+            }
+    
+            result.find(r => r.bucket_name === bucket.bucket_name)!.ball_counts = bucketBallCounts;
+        }
+    
+        for (const bucketResult of result) {
+            let a = `Bucket ${bucketResult.bucket_name}:`;
+            logs.push(a);
+            const ballCounts = bucketResult.ball_counts;
+            for (const ballName in ballCounts) {
+                if (ballCounts.hasOwnProperty(ballName)) {
+                    let b = `${ballCounts[ballName]} ${ballName} balls`;
+                    logs.push(b);
+                }
+            }
+        }
+    
+        const remaining = Object.entries(remainingBalls).filter(([_, count]) => count > 0);
+        if (remaining.length > 0) {
+            logs.push(`Return remaining balls to the shop:`);
+            for (const [ballName, count] of remaining) {
+                logs.push(`${count} ${ballName} balls`);
+            }
+        } else {
+            logs.push(`No balls remaining to return.`);
+        }
+    
+        return logs;
+    }
+
+      const logs = maxBallsOfOneColorInEachBucket(buckets, balls);
+      console.log(logs);
+
+      res.status(200).json(logs);
+
+      
     } catch (error) {
       console.error('Error fetching bucket names:', error);
       res.status(500).json({ error: 'Internal server error' });
