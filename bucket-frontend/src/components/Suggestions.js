@@ -12,10 +12,10 @@ function Suggestions() {
       try {
         const response = await axios.get('http://localhost:9001/api/v1/balls');
         const initialBallValues = {};
-        response.data.ball_name.forEach((ballName) => {
+        response.data.balls.forEach((ballName) => {
           initialBallValues[ballName] = ''; // Initialize each ball with an empty string
         });
-        setBallNames(response.data.ball_name);
+        setBallNames(response.data.balls);
         setBallValues(initialBallValues);
       } catch (error) {
         console.error('Error fetching ball names:', error);

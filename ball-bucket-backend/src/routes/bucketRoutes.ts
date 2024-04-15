@@ -1,8 +1,10 @@
-// import express from 'express';
-// import bucketsController from '../controllers/bucketsController';
+import express from 'express';
+import BucketController from '../controllers/bucketController';
 
-// const router = express.Router();
 
-// router.get('/api/v1/buckets', bucketsController.getBuckets);
+const router = express.Router();
 
-// export default router;
+router.post('/api/v1/buckets', BucketController.createBucket);
+router.get('/api/v1/buckets', BucketController.getBucketData);
+
+export default router;

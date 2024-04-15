@@ -1,8 +1,8 @@
-// import express from 'express';
-// import submitController from '../controllers/submitController';
+import express from 'express';
+import SubmitController from '../controllers/submitController';
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.post('/api/v1/submit', submitController.submitData);
+router.post('/api/v1/submit', SubmitController.submitBallCounts);
 
-// export default router;
+export default router;

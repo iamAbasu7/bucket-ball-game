@@ -1,8 +1,9 @@
-// import express from 'express';
-// import ballsController from '../controllers/ballsController';
+import express from 'express';
+import BallController from '../controllers/ballsController';
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get('/api/v1/balls', ballsController.getBalls);
+router.post('/api/v1/balls', BallController.createBall);
+router.get('/api/v1/balls', BallController.getBalls);
 
-// export default router;
+export default router;

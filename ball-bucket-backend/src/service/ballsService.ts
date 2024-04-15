@@ -1,13 +1,13 @@
-// import knex from 'knex';
-// import knexConfig from '../knexfile';
+import Knex from 'knex';
+import knexConfig from '../../knexfile';
 
-// const db = knex(knexConfig);
+const knex = Knex(knexConfig);
 
-// const ballsService = {
-//   async getBalls() {
-//     const balls = await db('balls').pluck('ball_name');
-//     return balls;
-//   }
-// };
-
-// export default ballsService;
+export default class BallService {
+  static async createBall(ball_name: string, volume: number) {
+    await knex('balls').insert({ ball_name, volume });
+  };
+  static async getBalls() {
+    return await knex('balls').pluck('ball_name');
+  }
+}

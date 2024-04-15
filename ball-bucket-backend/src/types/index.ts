@@ -12,3 +12,13 @@ interface Ball {
 interface BucketWithBalls extends Bucket {
     balls: Ball[];
 }
+
+interface ExtraBalls {
+    color: string;
+    count: number;
+}
+
+interface DistributionResult {
+    output: string[];
+    extraBalls: ExtraBalls[];
+}
