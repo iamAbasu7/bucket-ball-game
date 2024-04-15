@@ -15,19 +15,19 @@ git clone git@github.com:iamAbasu7/bucket-ball-game.git
 To set up the backend, follow these steps:
 
 1. Navigate to the `backend` directory:
-   ```bash
-   cd backend
-   ```
-
+   `cd ball-bucket-backend`
 2. create a database name `bucket_ball_game` in your  mysql db
-3. npm i
-4. npm run build 
-5. npm start migration
-6. npm start
+3. `npm i`
+4. `npm run build`
+5. `npm start migration`
+6. `npm start`
 
 ## Frontend Setup
 
-1. `npm i`
+1. Navigate to the `frontend` directory:
+   `cd bucket-frontend`
+   
+3. `npm i`
 
-2. `npm start`
+4. `npm start`
 
